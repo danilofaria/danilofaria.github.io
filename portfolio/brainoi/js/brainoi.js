@@ -304,6 +304,14 @@ function Brainoi(coordinates, width, height) {
 }
 
 Brainoi.prototype.click = function (b,x) { 
+    var block = this.freeBlockAt(b,x);
+    if (block != null){
+        block.grab(x);
+        this.block_grabbed = block;
+    }
+};
+
+Brainoi.prototype.freeBlockAt = function(b,x){
     var block = this.current_phase.block_on_top(b,x);
     if (block != null){
         var can_grab = false;
@@ -321,10 +329,10 @@ Brainoi.prototype.click = function (b,x) {
                 can_grab = true;
         }
         if (can_grab){
-            block.grab(x);
-            this.block_grabbed = block;}
+            return block;}
     }
-};
+    return null;
+}
 
 Brainoi.prototype.move = function (b,x){
     if (this.block_grabbed != null)
