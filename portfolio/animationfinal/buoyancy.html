@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Buoyancy by Danilo Faria</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
+	</head>
+	<body>
+		<div id="info">
+		<a href="index.html">back</a> - Buoyancy by <a href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a> 
+		<br/>
+		Use your mouse to control the camera's perspective.
+		<br/>
+		Click on the balls to inflate them or right-click them to deinflate.<br/> They will be more likely to float if inflated and more likely <br/>to sink otherwise once their masses are conserved and their volumes are changing.
+		</div>
+
+		<script src="js/thirdpartycode/three.min.js"></script>
+		<script src="js/thirdpartycode/math.min.js"></script>
+		<script src="js/thirdpartycode/Queue.js"></script>
+	    <script src="js/thirdpartycode/jquery.js"></script>
+		<script src="js/thirdpartycode/TrackballControls.js"></script>
+		<script src="js/mycode/NOTFSim.js"></script>
+		<script src="js/mycode/SceneHelper.js"></script>
+		<script src="js/mycode/buoyancy.js"></script>
+
+	</body>
+</html>

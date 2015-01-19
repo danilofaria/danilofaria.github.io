@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Computer Animation Final Project - Danilo Faria de Lima</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Final Project - Danilo Faria</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#solar">Scene 1</a>
+                    </li>
+                    <li>
+                        <a href="#gravity">Scene 2</a>
+                    </li>
+                    <li>
+                        <a href="#spring">Scene 3</a>
+                    </li>
+                    <li>
+                        <a href="#buoyancy">Scene 4</a>
+                    </li>
+                    <li>
+                        <a href="#radial_buoyancy">Scene 5</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+            <h2>COMS W4167: Computer Animation - Fall 2014, Final Project</h2>
+            <h3>Columbia University, The Fu Foundation School of Engineering and Applied Science</h3>
+            <h3>Student: Danilo Faria (df2553)</h3>
+            <p> 
+        For this project I implemented the physics for simple gravity, gravitational force, spring force, buoyancy force and radial buoyancy force all in three dimensions. I also coded 5 different interactive experiences ("scenes") that make use of the aforementioned forces. I used the <a href="http://threejs.org/">Three.js</a> library to render the scenes, but I coded all of the physics and program logic from scratch. This project is my first experience with Three.js.
+            </p> 
+        </header>
+
+        <hr>
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Scenes
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Project One -->
+        <div class="row" id="solar">
+            <div class="col-md-7">
+                <a href="solar.html">
+                    <img class="img-responsive" src="images/scene1.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-5" >
+                <h3>Scene One</h3>
+                <h4>Solar System</h4>
+                <p>A simple model of our Solar System. Utilizes gravitational forces that I've implemented in javascript based on our previous course experience. All planets are to scale with each other in size but not in distances (however, the sun is not).</p>
+                <a class="btn btn-primary" href="solar.html">View Scene <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Scene Two -->
+        <div class="row" id="gravity">
+            <div class="col-md-7">
+                <a href="gravity.html">
+                    <img class="img-responsive" src="images/scene2.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-5" >
+                <h3>Scene Two</h3>
+                <h4>Gravity and Spring</h4>
+                <p>In this scene you can see several "planets" going in random directions around a center body. The center body consists of a bunch of particles connected by springs to one central particle. Spring force was also implemented based on previous course experience.</p>
+                <a class="btn btn-primary" href="gravity.html">View Scene <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Scene Three -->
+        <div class="row" id="spring">
+            <div class="col-md-7">
+                <a href="spring.html">
+                    <img class="img-responsive" src="images/scene3.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-5" >
+                <h3>Scene Three</h3>
+                <h4>Springs</h4>
+                <p>Here you can see several particles connected by springs in a way to lead to some interesting motion.</p>
+                <a class="btn btn-primary" href="spring.html">View Scene <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Project Four -->
+        <div class="row" id="buoyancy">
+
+            <div class="col-md-7">
+                <a href="buoyancy.html">
+                    <img class="img-responsive" src="images/scene4.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-5" >
+                <h3>Scene Four</h3>
+                <h4>Buoyancy</h4>
+                <p>Several balls floating on water because of buoyancy forces that balance out gravity. User is able to inflate or deflate the balls while maintaining their weights, such that the balls will float or sink accordingly. Buoyancy force was implemented based on the book <a href="http://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768/">Game Physics Engine Development</a>. However, the book only considers the case of an surface on the ZX plane and my implementation generalizes for any plane defined by a point and a normal vector.
+                </p>
+                <a class="btn btn-primary" href="buoyancy.html">View Scene <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Scene Five -->
+        <div class="row" id="radial_buoyancy">
+            <div class="col-md-7">
+                <a href="radial_buoyancy.html">
+                    <img class="img-responsive" src="images/scene5.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <h3>Scene Five</h3>
+                <h4>Radial Buoyancy</h4>
+                <p>A simulation of a planet covered in liquid while attracting several other bodies in its direction through gravity until the bodies begin to float on the surface of the planet. Like in the previous scene, the user can control the volume of the balls and make them sink or float. For this I implemented radial buoyancy force that considers the surface to be some sphere with a defined radius.</p>
+                <a class="btn btn-primary" href="radial_buoyancy.html">View Scene <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>By <a href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a></p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/thirdpartycode/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/thirdpartycode/bootstrap.min.js"></script>
+
+</body>
+
+</html>

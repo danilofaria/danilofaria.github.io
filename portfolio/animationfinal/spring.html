@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>Springs by Danilo Faria</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
+	</head>
+	<body>
+		<div id="info">
+		<a href="index.html">back</a> - Springs by <a href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a> 
+		<br/>
+		Use your mouse to control the camera's perspective. Try rotating the object around.
+		<br/>
+		<span class="button" id="show_particles"> Show only particles</span>, 
+		<span class="button" id="show_edges"> Show only edges</span>, 
+		<span class="button" id="show_both"> Show both</span>
+		</div>
+
+		<script src="js/thirdpartycode/three.min.js"></script>
+		<script src="js/thirdpartycode/math.min.js"></script>
+		<script src="js/thirdpartycode/Queue.js"></script>
+	    <script src="js/thirdpartycode/jquery.js"></script>
+		<script src="js/thirdpartycode/TrackballControls.js"></script>
+		<script src="js/mycode/NOTFSim.js"></script>
+		<script src="js/mycode/SceneHelper.js"></script>
+		<script src="js/mycode/spring.js"></script>
+
+	</body>
+</html>
