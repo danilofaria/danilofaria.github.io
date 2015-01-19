@@ -24,6 +24,12 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );}
+window.addEventListener( 'resize', onWindowResize, false );
+
 //Back ground
 var sphere_material = new THREE.MeshBasicMaterial( { color: 0x000055, wireframe: true } );
 var reference = new THREE.Mesh();
@@ -74,7 +80,10 @@ var gridbg_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxuserconten
 gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
 gridbg_texture.anisotropy = 16;
 var game_texture = THREE.ImageUtils.loadTexture( 
-	"http://4.bp.blogspot.com/-V1QT6AeGmOg/Uu-BZhdUQsI/AAAAAAAADvs/ujJWWCeFAOw/s1600/crate+difuse.jpg" );
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/border.png");
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/black.png");
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neongreen.png");
+	"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse.jpg" );
 game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
 game_texture.anisotropy = 16;
 
@@ -100,7 +109,9 @@ for(var i = 0; i <max_block; i++){
 	scene.add( gridbg_cube );
 
 	var game_geometry = new THREE.BoxGeometry( 1, .8, .5 );
-	var game_material = new THREE.MeshPhongMaterial( { map: game_texture, emissive: 0xffff00, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
+	var game_material = new THREE.MeshPhongMaterial( { map: game_texture, emissive: 0xffffff, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
+    // new THREE.MeshPhongMaterial( { map: game_texture, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } ) ;
+	
 	var game_cube = new THREE.Mesh( game_geometry, game_material );
 	game_cube.type_m = "game";
 	game_cubes.push(game_cube);
@@ -188,15 +199,16 @@ var render = function () {
 	reference.rotation.y += 0.001;
 
 	if (win){
+		var next = brainoi.next_phase();
+		if(next){
 		alert("Congratulations!");
-		brainoi.next_phase();
 		updateGrid();
-		win=false;
 		document.getElementById("phase_n").innerHTML = brainoi.phase_n;
-		document.getElementById("moves").innerHTML = 0;
+		document.getElementById("moves").innerHTML = 0;}
+		else alert("Congratulations! You've beat all the available phases!");
+		win=false;
 	}
     land_cube.visible=false;
-
 
 	  // find intersections
 	  var vector = new THREE.Vector3( mouse.x, mouse.y, 1 ).unproject( camera );
@@ -205,7 +217,6 @@ var render = function () {
 	  if ( intersects.length > 0 ) {
 	    if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.type_m == "game") {
 	      if ( HIGHLIGHTED ) HIGHLIGHTED.material.emissive.setHex( HIGHLIGHTED.currentHex );
-	      //if ( intersects[ 0 ].object.is_planet){
 	        INTERSECTED = intersects[ 0 ].object;
 	        
 	        if(!brainoi.block_grabbed){
@@ -222,7 +233,6 @@ var render = function () {
 	    if ( HIGHLIGHTED ) HIGHLIGHTED.material.emissive.setHex( HIGHLIGHTED.currentHex );
 	    INTERSECTED = null;
 	    HIGHLIGHTED = null;
-	    // land_cube.visible=false;
 	  }
 	  if (mouse_clicked && !button_clicked){
 	    if (INTERSECTED && !brainoi.block_grabbed){

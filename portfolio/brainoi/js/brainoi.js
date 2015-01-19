@@ -367,6 +367,7 @@ Brainoi.prototype.next_phase = function (){
         this.current_phase = new Phase(phase_data[0],phase_data[1],phase_data[2]);
     }
     this.phase_w = false;
+    return this.current_phase;
     // this.reset_moves_history();
 };
 
