@@ -1,17 +1,18 @@
 <html>
 	<head>
 		<title>Brainoi by Danilo Faria</title>
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 			body {
 				font-family: Monospace;
 				background-color: #000;
-				color: #fff;
 				margin: 0px;
 				overflow: hidden;
 			}
 			#info {
+				color: #fff;
 				position: absolute;
 				top: 10px;
 				width: 100%;
@@ -24,11 +25,89 @@
 	</head>
 	<body>
 		<div id="info">
-			Brainoi by <a href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a> <br/>
-			Phase number <span id ="phase_n">1</span><br/>
-			Moves <span id ="moves">0</span><br/>
+			Brainoi by <a href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a> 
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-default btn-xs" >
+			  Instructions
+			</button>
+			<br/>
+
+			<br/>
+			
+
+		</div>
+		
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://www.linkedin.com/in/danilofaria7" target="_blank">Brainoi by Danilo Faria</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><p class="navbar-text">Phase number: <span id ="phase_n">1</span></p></li>
+            <li><p class="navbar-text" >Moves: <span id ="moves">0</span><br/></p></li>
+            <li><a href="#" data-toggle="modal" data-target="#InstructionsModal">Instructions</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#AboutModal">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+		<!-- Modal -->
+		<div class="modal fade" id="InstructionsModal" tabindex="-1" role="dialog" aria-labelledby="InstructionsModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="InstructionsModalLabel">Brainoi Instructions</h4>
+		      </div>
+		      <div class="modal-body">
+				<p>The puzzle is made up of three grid-like compartments, each one with a certain height and a certain width, and blocks of different widths inside of these compartments, possibly stacked. Each block can only be on top of a larger block or on the bottom of a compartment. The goal is to move each block such that eventually all of them are inside of the rightmost compartment. </p>
+				<p>
+				Each move has to obey the following simple rules:  
+				</p>
+				<ul>
+				<li> Only one block can be moved at a time.</li>
+				<li> Each block can only be moved if it is free of blocks on top of itself.</li>
+				<li> No block may placed on top of smaller or same size block.</li>
+				</ul>	      	
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 
+				<!-- Modal -->
+		<div class="modal fade" id="AboutModal" tabindex="-1" role="dialog" aria-labelledby="AboutModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="AboutModalLabel">About Brainoi</h4>
+		      </div>
+		      <div class="modal-body">
+				<p>
+					The Brainoi puzzle is a brand-new problem whose mechanics are similar to those of the Tower of Hanoi problem. It was created by computer science student 
+		          <a  href="https://www.linkedin.com/in/danilofaria7" target="_blank">Danilo Faria</a> and explored by him in his undergraduate thesis. Link to thesis summary: <a href="http://bit.ly/brainoi2014">bit.ly/brainoi2014</a>.
+				</p>	      	
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	    <script src="js/jquery.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
 		<script src="js/three.min.js"></script>
 		<script src="js/brainoi.js"></script>
 		<script src="js/index.js"></script>

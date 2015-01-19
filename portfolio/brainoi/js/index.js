@@ -25,15 +25,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 //Back ground
-// var sphere_material = new THREE.MeshNormalMaterial(  );
 var sphere_material = new THREE.MeshBasicMaterial( { color: 0x000055, wireframe: true } );
-// var sphere_material = new THREE.MeshBasicMaterial( { color: 0xffaa00, transparent: true, blending: THREE.AdditiveBlending } );
-// var sphere_material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0xff0000, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading, opacity: 0.9, transparent: true } );
-// var sphere_material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00ff00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading, opacity: 0.9, transparent: true } );
-
-// var sphere_material = new THREE.MeshLambertMaterial( { color: 0xdddddd, shading: THREE.FlatShading } );
-// var sphere_material = new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } );
-// var sphere_material = new THREE.MeshLambertMaterial( { color: 0xdddddd, shading: THREE.SmoothShading } );
 var reference = new THREE.Mesh();
 scene.add(reference);
 var radius = 1, segments = 16, rings = 16;
