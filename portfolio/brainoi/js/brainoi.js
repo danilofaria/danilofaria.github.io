@@ -351,11 +351,25 @@ Brainoi.prototype.phase_won = function (){
     return this.phase_w;
 };
 
+Brainoi.prototype.next_phase = function (){
+    this.phase_n += 1;
+    if (this.phase_maker){
+        var phase_data = this.phase_maker.next_phase();
+        if (phase_data == null) return null;
+        this.current_phase = new Phase(phase_data[0],phase_data[1],phase_data[2]);
+    }
+    this.phase_w = false;
+    // this.reset_moves_history();
+};
 
 function BrainoiPhaseSequence() {
     this.current_phase_number = 0;
     this.phases = [
-        [[[1,1,1],[1,1,2],[1,5,2],[1,1,3]],5,[5,4,1,3]]
+        [[[1, 1, 1], [1, 1, 2], [1, 1, 3]], 3, [3, 2, 1]],
+        [[[1,1,1],[1,1,2],[1,5,2],[1,1,3]],5,[5,4,1,3]],
+        [[[2, 1, 1], [1, 1, 1], [3, 1, 1], [2, 1, 2]], 5, [5, 4, 1, 3]],
+        [[[1, 1, 1], [1, 1, 2], [1, 5, 2], [1, 1, 3], [1, 1, 4]], 5, [5, 4, 1, 3, 2]],
+        [[[1, 1, 1], [1, 1, 2], [1, 4, 2], [1, 1, 3], [1, 2, 3], [1, 4, 3], [1, 5, 3]], 5, [5, 3, 2, 1, 2, 1, 1]]
     ]
 }
 
@@ -364,7 +378,7 @@ BrainoiPhaseSequence.prototype.current_phase = function () {
 };
 
 BrainoiPhaseSequence.prototype.next_phase = function () { 
-    if (this.current_phase_number < self.phases.length - 1){
+    if (this.current_phase_number < this.phases.length - 1){
         this.current_phase_number++;
         return this.current_phase();
     }
