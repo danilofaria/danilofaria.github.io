@@ -1,151 +1,534 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Danilo Faria's website">
+		<meta name="keywords" content="danilo, faria, danilofaria, columbia, new york, internship">
+		<meta name="author" content="Danilo Faria">
 
-<script src="processing.min.js"></script>
-<script type="text/processing" data-processing-target="mycanvas">
+		<title>Danilo Faria de Lima - Software Developer</title>
 
-// custom class to create a flying pyramid
-class Pyramid {
-  PVector[] v = new PVector[5]; // the 5 relative coordinates of the pyramid as an object
-  color[] c = new color[5]; // the colors for each coordinate
-  float pHeight, pRadius; // the height and base radius of the shape
-  float speed, transparency; // the movement speed and the color transparency
-  float x, y, z; // the position of the shape as a whole
-  
-  Pyramid(float pHeight, float pRadius) {
-    this.pHeight = pHeight/2; // this is done so the pyramid rotates around the center (see createPyramid() method)
-    this.pRadius = pRadius; // the radius of the shape
-    speed = random(MAXSPEED/8, MAXSPEED); // set the speed randomly based on the global MAXSPEED variable
-    createPyramid(); // set the relative coordinates of the pyramid as an object
-    z = random(-5000, 750); // randomly set the z position of the shape as a whole
-    reset(); // randomly set the x and y position of the shape as a whole and the colors of the shape
-  }
-  
-  void createPyramid() {
-    v[0] = new PVector(0, -pHeight, 0);                                      // top of the pyramid
-    v[1] = new PVector(pRadius*cos(HALF_PI), pHeight, pRadius*sin(HALF_PI)); // base point 1
-    v[2] = new PVector(pRadius*cos(PI), pHeight, pRadius*sin(PI));           // base point 2
-    v[3] = new PVector(pRadius*cos(1.5*PI), pHeight, pRadius*sin(1.5*PI));   // base point 3
-    v[4] = new PVector(pRadius*cos(TWO_PI), pHeight, pRadius*sin(TWO_PI));   // base point 4
-  }
+		<!-- Styles
+		================================================== -->
+		<link rel='stylesheet' type="text/css" media="screen" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/freelancer.css">
 
-  // controls the z movement of the shape, when the z goes beyond the camera
-  // it's reset to position in the distance and the xy position and colors are randomly set
-  // the transparency is determined by the z position
-  void update() {
-    z += speed; // increase z by speed
-    if (z > 750) { z = -5000; reset(); } // if beyond the camera, reset() and start again
-    transparency = z<-2500?map(z, -5000, -2500, 0, 255):255; // far away slowly increase the transparency, within range is fully opaque
-  }
+		<!-- IE support
+		================================================== -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/css3-mediaqueries.js"></script>
+		<![endif]-->
+		<!--[if IE 7]>
+			<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+		<![endif]-->
+	</head>
 
-  // displays the shape  
-  void display() {
-    pushMatrix(); // use push/popMatrix so each Shape's translation/rotation does not affect other drawings
+	<body>
+		<div class="container resume">
 
-    // move and rotate the shape as a whole    
-    translate(x, y, z); // translate to the position of the shape
-    rotateY(x + frameCount*0.01); // rotate around the Y axis based on the x position and frameCount
-    rotateX(y + frameCount*0.02); // rotate around the X axis based on the y position and frameCount
-    
-    // draw the 4 side triangles of the pyramid, each connected to the top of the pyramid
-    beginShape(TRIANGLE_FAN); // TRIANGLE_FAN is suited for this, it starts with the center point c[0]
-    for (int i=0; i<5; i++) {
-      fill(c[i], transparency); // use the color, but with the given z-based transparency
-      vertex(v[i].x, v[i].y, v[i].z); // set the vertices based on the object coordinates defined in the createShape() method
-    }
-    // add the 'first base vertex' to close the shape
-    fill(c[1], transparency);
-    vertex(v[1].x, v[1].y, v[1].z);
-    endShape(); // finalize the Shape
-    
-    // draw the base QUAD of the pyramid
-    fill(c[1], transparency); // use a single color (optional: for vertex colors you can also put this in the for loop)
-    beginShape(QUADS); // it's a QUAD so the QUADS shapeMode is the most suitable
-    for (int i=1; i<5; i++) {
-      vertex(v[i].x, v[i].y, v[i].z); // the 4 base points
-    }
-    endShape(); // finalize the Shape
-    
-    popMatrix(); // use push/popMatrix so each Shape's translation/rotation does not affect other drawings
-  }
+			<!-- Heading 
+			================================================== -->
+			<div class="row heading">
+				
+				<div class="span8">
+					<img class="my-picture" src="img/danilofaria.JPG" alt="Photo of Danilo Faria">
+					<img class="layout-topborder-480px" src="img/css/topborder-480px.png" alt="corner top right">
+					<img class="layout-topborder-320px" src="img/css/topborder-320px.png" alt="corner top right">
+					<h1 class="my-name">Danilo Faria de Lima</h1>
+					<h2 class="my-profession">Software Developer / Computer Scientist</h2>
+					<p class="my-message">
+						<strong><i class="icon-comment-alt"></i>&nbsp;Welcome!
+						I am currently looking for an internship opportunity in New York city (preferably) or any other city in the United States.</strong> 
+						I am a very motivated, ever-evolving individual. I love the idea of being able to solve problems and make people's lives easier or more fun through the use of programming tools. Feel free to browse my website and contact me if you have any questions or would like to hire me.
+					</p>
+				</div>
 
-  // randomly sets the xy position of the shape as a whole and the colors of the shape  
-  void reset() {
-    x = random(-2*width, 3*width); // set the x position
-    y = random(-height, 2*height); // set the y position
-    c[0] = color(random(150, 255), random(150, 255), random(150, 255)); // set the top color (a bit lighter)
-    // randomly set the 4 colors in the base of the shape
-    for (int i=1; i<5; i++) {
-      c[i] = color(random(255), random(255), random(255)); // random RGB color
-    }
-  }
-}
+				<div class="span3 offset1 services">
+					<img class="layout-topborder-screen" src="img/css/topborder-screen.png" alt="corner top right">
+<!-- 					<h2 class="my-services">My Services <i class="icon-cogs"></i></h2>
+					<ul>
+						<li><span class="phone-480px"><i class="icon-pushpin"></i></span>Your Service I</li>
+						<li><span class="phone-480px"><i class="icon-pushpin"></i></span>Your Service II</li>
+						<li><span class="phone-480px"><i class="icon-pushpin"></i></span>Your Service III</li>
+						<li><span class="phone-480px"><i class="icon-pushpin"></i></span>Your Service IV</li>
+						<li><span class="phone-480px"><i class="icon-pushpin"></i></span>Your Service V</li>
+					</ul> -->
+				</div>
 
+			</div>
 
-/*
+			<!-- Tabs 
+			================================================== -->
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#resume-tab" data-toggle="tab"><i class="icon-tasks"></i> Resume</a>
+				</li>
+				<li>
+					<a href="#portfolio-tab" data-toggle="tab"><i class="icon-briefcase"></i> Portfolio</a>
+				</li>
+				<li>
+					<a href="#contact-tab" data-toggle="tab"><i class="icon-envelope"></i> Contact</a>
+				</li>
+			</ul>
 
- Custom 3D Geometry by Amnon Owed (May 2013)
- https://github.com/AmnonOwed
- http://vimeo.com/amnon
- 
- Creating custom 3D shapes (pyramids) using vertices, beginShape & endShape.
- For more information about Shapes see: http://processing.org/reference/beginShape_.html
- This example also displays OpenGL's automatic color interpolation between vertices.
+			<div class="tab-content">
 
- LEFT MOUSE BUTTON = toggle between black/white background
- RIGHT MOUSE BUTTON = toggle the use of lights()
- 
- Built with Processing 2.0b8 / 2.0b9 / 2.0 Final
- 
-*/
+				<!-- Resume 
+				================================================== -->
+				<div id="resume-tab" class="tab-pane row-fluid active fade in">
 
-int NUMSHAPES = 150; // the number of flying pyramids
-float MAXSPEED = 50; // the maximum speed at which a pyramid may move
+					<!-- column 1 -->
+					<div class="span4">
+						<h6><a href="http://bit.ly/resume_danilofaria"><i class="icon-file-alt"></i>&nbsp;My official resume (PDF)</a></h6>
 
-ArrayList <Pyramid> shapes = new ArrayList <Pyramid> (); // arrayList to store all the shapes
-boolean bLights, bWhitebackground; // booleans for toggling lights and background
+						<h3 class="my-caption">Education</h3>
+						<h4 class="my-activity">
+						<a href="http://engineering.columbia.edu/">Columbia University</a>, New York, NY
+						</h4>
+						<h5 class="my-venture">
+						<a href="http://www.cs.columbia.edu/education/ms">MS in Computer Science</a> <span>Fall 2014 - Winter 2016</span>
+						</h5>
+						<h5 class="my-venture">with a focus on <a href="http://www.cs.columbia.edu/education/ms/visionAndGraphics">Vision and Graphics </a></h5>
 
-void setup() {
-  size(800, 800, P3D); // use the P3D OpenGL renderer
-  noStroke(); // turn off stroke (for the rest of the sketch)
-  smooth(6); // set smooth level 6 (default is 2)
-  // create all the shapes with a certain radius and height
-  for (int i=0; i<NUMSHAPES; i++) {
-    float r = random(25, 200);
-    float f = random(2, 5);
-    shapes.add( new Pyramid(f*r, r) );
-  }
-}
+						<h4 class="my-activity"><a href="http://www.utoronto.ca/">University of Toronto</a>, Toronto, Canada</h4>
+						<h5 class="my-venture">Exchange, <a href="http://web.cs.toronto.edu/">Computer Science</a> <span>Fall '12 - Winter '13</span></h5>
 
-void draw() {
-  background(bWhitebackground?255:0); // draw a white or black background
-  if (bLights) { lights(); } // if true, use lights()
-  perspective(PI/3.0, (float) width/height, 1, 1000000); // perspective to see close shapes
-  // update and display all the shapes
-  for (Pyramid p : shapes) {
-    p.update();
-    p.display();
-  }
-}
-
-void mousePressed() {
-  if (mouseButton==LEFT) { bWhitebackground = !bWhitebackground; } // toggle between black/white background
-  if (mouseButton==RIGHT) { bLights = !bLights; } // toggle the use of lights()
-}
+						<h4 class="my-activity"><a href="http://www.sistemas.ufrn.br/portal/EN/">UFRN</a>, Natal, Brazil</h4>
+						<h5 class="my-venture"><a href="http://www.dimap.ufrn.br/en/undergraduate/compute-science/presentation">B.S in Computer Science</a> <span>February 2010 - June 2014</span></h5>
 
 
-</script>
+<!-- 						<h4 class="my-activity">B.A in ...</h4>
+						<h5 class="my-venture">College, State <span>YYYY - YYYY</span></h5>
+ -->
+<!-- 						<h3 class="my-caption">Awards &amp; Competitions</h3>
+						<h4 class="my-activity">Contest</h4>
+						<h5 class="my-venture">Category, Finalist <span>YYYY</span></h5>
+						<h4 class="my-activity">Contest</h4>
+						<h5 class="my-venture">Category, Ranking <span>YYYY</span></h5>
+						<h4 class="my-activity">Contest</h4>
+						<h5 class="my-venture">Category, Ranking <span>YYYY</span></h5>
 
-<body>
+						<h3 class="my-caption">Published</h3>
+						<h4 class="my-activity">Magazine</h4>
+						<h5 class="my-venture">Article<span>Issue MM/YY</span></h5> -->
+					</div>
 
-<h1>Hello world</h1>
+					<!-- column 2 -->
+					<div class="span4">
+<!-- 						<h3 class="my-caption">Employment</h3>
+						<h4 class="my-activity">Job / Position</h4>
+						<h5 class="my-venture">Company <span>MM YYYY - Present</span></h5>
+						<p  class="my-specifics">
+							Ad putent delenit eos, quis ullamcorper vix eu. Te mundi latine temporibus eum.
+						</p>
+						<h4 class="my-activity">Job / Position</h4>
+						<h5 class="my-venture">Company <span>MM YYYY - MM YYYY</span></h5>
+						<p  class="my-specifics">
+							Curabitur turpis enim, fermentum ut eleifend vel, pulvinar id nibh. 
+							Nam tincidunt ullamcorper sodales.
+						</p>
+ -->
 
-<p>danilo faria was here</p>
-<canvas id="mycanvas"></canvas>
+						<h3 class="my-caption">Internship</h3>
 
-<!-- <canvas id="mycanvas2" data-processing-sources="Custom3DGeometry.pde"></canvas> -->
+						<h4 class="my-activity">Software developer</h4>
+						<h5 class="my-venture"><a href="http://www.info.ufrn.br/html/index.php">SINFO</a>, Natal, Brazil <span>August 2013 - April 2014</span></h5>
+						<p  class="my-specifics">
+							Collaborated on several projects, mainly the <a href="https://sucupira.capes.gov.br/sucupira/"> Sucupira</a> platform. Programmed in Java and used tools such as JSF, Hibernate, Oracle Database and Eclipse.
+						</p>
 
-</body>
+						<h4 class="my-activity">Software developer</h4>
+						<h5 class="my-venture"><a href="http://www.stewardly.ca/index.htm">Stewardly</a>, Toronto, Canada <span>Summer 2013</span></h5>
+						<p  class="my-specifics">
+							Developed some generic Software as a Service (Saas) components to be used in a larger suite of software. Learned web development framework and associated tools and practices of Agile, Test-Driven development based on Behavior-Driven Design with Ruby on Rails.
+						</p>
+
+
+					</div>
+
+					<!-- column 3 -->
+					<div class="span4">
+
+						<h3 class="my-caption">Technical Knowledge</h3>
+						<h4 class="my-skill">
+							Python &amp; PyQt
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+							</span>
+						</h4>
+						<h4 class="my-skill">
+							Java
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>
+						<h4 class="my-skill">
+							C &amp; C++
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>
+						<h4 class="my-skill">
+							Ruby &amp; Ruby on Rails
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>						
+						<h4 class="my-skill">
+							Javascript
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>
+						<h4 class="my-skill">
+							HTML 5, CSS &amp; Bootstrap 3.0
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>
+ 						<h4 class="my-skill">
+							MATLAB
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4> 
+						<h4 class="my-skill">
+							Maya
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star-empty"></i>
+								<i class="icon-star-empty"></i>
+							</span>
+						</h4>
+
+						
+
+						<h3 class="my-caption">Foreign Languages</h3>
+						<h4 class="my-skill">
+							Portuguese
+							<span>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+								<i class="icon-star"></i>
+							</span>
+						</h4>
+					</div>
+
+				</div><!-- end of resume-tab -->
+
+				<!-- Portfolio 
+				================================================== -->
+				<div id="portfolio-tab" class="tab-pane fade">
+
+					<div id="portfolio">
+						
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-signin"></i>&nbsp;Client
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<p>
+									- Item Task I<br>
+									- Item Task II<br>
+									- Item Task III<br>
+								</p>
+								<p>
+									Ad putent delenit eos, quis ullamcorper vix eu.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-picture"></i>&nbsp;Item&nbsp;|&nbsp;
+									</a>
+									<a href="#" target="_blank">
+										<i class="icon-file-alt"></i>&nbsp;.pdf
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Pellentesque dignissim, odio a euismod viverra, tellus orci viverra risus, 
+									sed accumsan odio elit nec tellus.
+								</p>
+								<p>
+									Ad putent delenit eos, quis ullamcorper vix eu.
+								</p>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-signin"></i>&nbsp;Agency
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+								<p>
+									- Item Task I<br>
+									- Item Task II<br>
+									- Item Task III<br>
+								</p>
+								<p>
+									Ad putent delenit eos, quis ullamcorper vix eu.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-download-alt"></i>&nbsp;.doc&nbsp;|&nbsp;
+									</a>
+									<a href="#" target="_blank">
+										<i class="icon-file-alt"></i>&nbsp;.pdf
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-download-alt"></i>&nbsp;.zip&nbsp;|&nbsp;
+									</a>
+									<a href="#" target="_blank">
+										<i class="icon-picture"></i>&nbsp;Product
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-signin"></i>&nbsp;Customer
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<img src="img/mock-up-image-portfolio-item.png" alt="your image description">
+								<h4>Item Title</h4>
+								<p>
+									Ad putent delenit eos, quis ullamcorper vix eu.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-picture"></i>&nbsp;Item&nbsp;|&nbsp;
+									</a>
+									<a href="#" target="_blank">
+										<i class="icon-signin"></i>&nbsp;Client
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Pellentesque dignissim, odio a euismod viverra, tellus orci viverra risus, 
+									sed accumsan odio elit nec tellus.
+								</p>
+								<p>
+									Sint vidisse in quo, vim an amet dicunt adversarium.
+								</p>
+								<p>
+									Ad putent delenit eos, quis ullamcorper vix eu.
+								</p>
+								<p class="portfolio-links">
+									<a href="#" target="_blank">
+										<i class="icon-file-alt"></i>&nbsp;.pdf&nbsp;|&nbsp;
+									</a>
+									<a href="#" target="_blank">
+										<i class="icon-signin"></i>&nbsp;Client
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="portfolio-item">
+							<div class="portfolio-details">
+								<h4>Item Title</h4>
+								<p>
+									Pellentesque dignissim, odio a euismod viverra, tellus orci viverra risus, 
+									sed accumsan odio elit nec tellus.
+								</p>
+								<p>
+									<a href="#" target="_blank">
+										<i class="icon-mobile-phone"></i>&nbsp;App Store
+									</a>
+								</p>
+							</div>
+						</div>
+
+					</div><!-- end of portfolio -->
+
+				</div><!-- end of portfolio-tab -->
+
+				<!-- Contact 
+				================================================== -->
+				<div id="contact-tab" class="tab-pane fade">
+
+					<!-- google map container -->
+					<div id="my-location"></div>
+
+					<div class="row-fluid">
+
+						<!--column 1 -->
+						<div class="span4">
+							
+							<h3 class="my-caption">Personal Information</h3>
+							<h4 class="my-info">Address <span>155 Claremont Avenue</span></h4>
+							<h4 class="my-info"><span>Room 861, International House</span></h4>
+							<h4 class="my-info">&nbsp;<span>New York</span></h4>
+							<h4 class="my-info">&nbsp;<span>NY, 10027</span></h4>
+
+						</div>
+
+						<!--column 2 -->
+						<div class="span4">
+							
+							<h3 class="my-caption">Contact Me</h3>
+							<!-- <h4 class="my-info">
+								<i class="icon-phone"></i> Phone
+								<span>123.456.7890</span>
+							</h4>
+							 -->
+							 <h4 class="my-info">
+								<i class="icon-signal"></i> Cell
+								<span>(917) 912-8951</span>
+							</h4>
+							<h4 class="my-info">
+								<i class="icon-envelope"></i> Email
+								<span>
+									<a href="mailto:df2553@columbia.edu">df2553@columbia.edu</a>
+								</span>
+							</h4>
+							<h4 class="my-info">
+								<i class="icon-globe"></i> Website
+								<span>
+									<a href="http://danilofaria.github.io" target="_blank">danilofaria.github.io</a>
+								</span>
+							</h4>
+
+						</div>
+
+						<!--column 3 -->
+						<div class="span4">
+
+							<h3 class="my-caption">Follow Me</h3>
+							<h4 class="my-info">
+								<i class="icon-linkedin"></i>
+								<span>
+									<a href="https://www.linkedin.com/in/danilofaria7" target="_blank">LinkedIn</a>
+								</span>
+							</h4>
+							<h4 class="my-info">
+								<i class="icon-github"></i>
+								<span>
+									<a href="https://github.com/danilofaria" target="_blank">GitHub</a>
+								</span>
+							</h4>
+							<h4 class="my-info">
+								<i class="icon-google-plus"></i>
+								<span>
+									<a href="https://google.com/+DaniloFaria7" target="_blank">Google+</a>
+								</span>
+							</h4>
+						</div>
+
+					</div><!-- end of row -->
+
+				</div><!-- end of contact-tab -->
+
+			</div><!-- end of tab-content -->
+
+		</div><!-- end of container resume -->
+
+		<!-- Javascript 
+		================================================== -->
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.masonry.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/freelancer.js"></script>
+
+	</body>
 </html>
-
-
