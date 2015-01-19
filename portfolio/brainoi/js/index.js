@@ -64,9 +64,10 @@ for ( var i = 0; i < 1000; i ++ ) {
 
 var land_geometry = new THREE.BoxGeometry( 1, .8, .5 );
 var land_material = 
-new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00ff00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading } );
+new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00ff00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading, opacity: 0.5, transparent:true } );
 var land_cube = new THREE.Mesh( land_geometry, land_material );
 land_cube.visible=false;
+			land_cube.position.z=.01;
 scene.add(land_cube);
 
 var max_dimension = 10;
@@ -80,7 +81,8 @@ grid_texture.anisotropy = 16;
 var gridbg_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
 gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
 gridbg_texture.anisotropy = 16;
-var game_texture = THREE.ImageUtils.loadTexture( "http://4.bp.blogspot.com/-V1QT6AeGmOg/Uu-BZhdUQsI/AAAAAAAADvs/ujJWWCeFAOw/s1600/crate+difuse.jpg" );
+var game_texture = THREE.ImageUtils.loadTexture( 
+	"http://4.bp.blogspot.com/-V1QT6AeGmOg/Uu-BZhdUQsI/AAAAAAAADvs/ujJWWCeFAOw/s1600/crate+difuse.jpg" );
 game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
 game_texture.anisotropy = 16;
 
@@ -198,6 +200,8 @@ var render = function () {
 		brainoi.next_phase();
 		updateGrid();
 		win=false;
+		document.getElementById("phase_n").innerHTML = brainoi.phase_n;
+		document.getElementById("moves").innerHTML = 0;
 	}
     land_cube.visible=false;
 
@@ -238,6 +242,7 @@ var render = function () {
 	  	}else if (brainoi.block_grabbed){
 	  		var block = brainoi.block_grabbed;
 	  		brainoi.release();
+			document.getElementById("moves").innerHTML = brainoi.current_phase.n_moves;
 	  		win = brainoi.phase_won();
 			updateBlock(block);
 	  	}
