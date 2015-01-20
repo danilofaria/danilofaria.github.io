@@ -60,12 +60,11 @@ for ( var i = 0; i < 1000; i ++ ) {
 }
 
 
-var land_geometry = new THREE.BoxGeometry( 1, .8, .5 );
+var land_geometry = new THREE.BoxGeometry( 1, 1, .2 );
 var land_material = 
-new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00ff00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading, opacity: 0.5, transparent:true } );
+new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00aa00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading } );
 var land_cube = new THREE.Mesh( land_geometry, land_material );
 land_cube.visible=false;
-			land_cube.position.z=.01;
 scene.add(land_cube);
 
 var max_dimension = 10;
@@ -83,7 +82,8 @@ var game_texture = THREE.ImageUtils.loadTexture(
 	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/border.png");
 	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/black.png");
 	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neongreen.png");
-	"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse.jpg" );
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse.jpg" );
+"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
 game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
 game_texture.anisotropy = 16;
 
@@ -108,7 +108,7 @@ for(var i = 0; i <max_block; i++){
 	gridbg_cube.visible=false;
 	scene.add( gridbg_cube );
 
-	var game_geometry = new THREE.BoxGeometry( 1, .8, .5 );
+	var game_geometry = new THREE.BoxGeometry( 1, 1, .5 );
 	var game_material = new THREE.MeshPhongMaterial( { map: game_texture, emissive: 0xffffff, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
     // new THREE.MeshPhongMaterial( { map: game_texture, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } ) ;
 	
@@ -124,7 +124,7 @@ var win = false;
 var n_bin=3, n_col=5, n_row=5;
 function blockToWorld(b,x,y,width){
     width = typeof width !== 'undefined' ? width : 1;
-    return [(b-1)*(n_col+1)-(n_bin*n_col+2)/2+.5+(x-1)+width/2-.5 +.1, (y-1) -n_row/2+0.5 +.1];
+    return [(b-1)*(n_col+1)-(n_bin*n_col+2)/2+.5+(x-1)+width/2-.5, (y-1) -n_row/2+0.5];
 }
 
 function updateBlock(block, movement){
@@ -179,7 +179,7 @@ function updateGrid(){
 		var game_cube = game_cubes[game_i]; game_i++;
 		game_cube.visible=true;
 		var block = blocks[b];
-		game_cube.scale.x = block.width-.2;
+		game_cube.scale.x = block.width;
 		var world_coord = blockToWorld(block.b(), block.x(),block.y(),block.width);
 		game_cube.position.x = world_coord[0];
 		game_cube.position.y = world_coord[1];
@@ -262,7 +262,7 @@ var render = function () {
 		  	var world_coord = blockToWorld(coord[0], coord[1], y, block.width);
 			land_cube.position.x = world_coord[0];
 			land_cube.position.y = world_coord[1];
-			land_cube.scale.x = block.width-.2;
+			land_cube.scale.x = block.width;
 		  }
 	  	}
 	  }
