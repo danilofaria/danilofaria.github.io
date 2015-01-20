@@ -71,11 +71,14 @@ var max_block = max_dimension*max_dimension*3;
 var grid_cubes = [], gridbg_cubes = [], game_cubes = [], grid_i=0, game_i=0;
 
 var shininess = 0, specular = 0x333333, bumpScale = 1, shading = THREE.SmoothShading;
-var gridbg_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
+var gridbg_texture = THREE.ImageUtils.loadTexture( 
+	"http://danilofaria.github.io/portfolio/brainoi/img/neon.png");
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
 gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
 gridbg_texture.anisotropy = 16;
 var game_texture = THREE.ImageUtils.loadTexture( 
-	"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
+	"http://danilofaria.github.io/portfolio/brainoi/img/crate.jpg");
+	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
 game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
 game_texture.anisotropy = 16;
 
