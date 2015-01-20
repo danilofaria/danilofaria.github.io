@@ -40,7 +40,6 @@ for ( var i = 0; i < 1000; i ++ ) {
   vertex.x = THREE.Math.randFloatSpread( 50 );
   vertex.y = THREE.Math.randFloatSpread( 50 );
   vertex.z = THREE.Math.randFloatSpread( 50 );
-  //My change
   while(vertex.length() < 10){
     vertex.x = THREE.Math.randFloatSpread( 50 );
     vertex.y = THREE.Math.randFloatSpread( 50 );
@@ -67,14 +66,11 @@ var land_cube = new THREE.Mesh( land_geometry, land_material );
 land_cube.visible=false;
 scene.add(land_cube);
 
-var max_dimension = 10;
+var max_dimension = 6;
 var max_block = max_dimension*max_dimension*3;
 var grid_cubes = [], gridbg_cubes = [], game_cubes = [], grid_i=0, game_i=0;
 
 var shininess = 0, specular = 0x333333, bumpScale = 1, shading = THREE.SmoothShading;
-var grid_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
-grid_texture.wrapS = grid_texture.wrapT = THREE.RepeatWrapping;
-grid_texture.anisotropy = 16;
 var gridbg_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
 gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
 gridbg_texture.anisotropy = 16;
@@ -86,8 +82,6 @@ game_texture.anisotropy = 16;
 for(var i = 0; i <max_block; i++){
 	var grid_geometry = new THREE.BoxGeometry( 1, 1, .51 );
 	var grid_material = new THREE.MeshBasicMaterial( { color: 0x555555, transparent: true,  opacity: 0, blending: THREE.AdditiveBlending } );
-	// var grid_material =  new THREE.MeshPhongMaterial( { map: grid_texture, side: THREE.FrontSide, emissive: 0xFFFFFF, bumpMap: grid_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, shading: shading, opacity: 0.6, transparent: true  } );
-	// new THREE.MeshPhongMaterial( { map: grid_texture, emissive: 0xffff00, bumpMap: grid_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
 	var grid_cube = new THREE.Mesh( grid_geometry, grid_material );
 	grid_cube.type_m = "game";
 	grid_cubes.push(grid_cube);
@@ -96,9 +90,7 @@ for(var i = 0; i <max_block; i++){
 	scene.add( grid_cube );
 
 	var gridbg_geometry = new THREE.BoxGeometry( 1, 1, .01 );
-	// var gridbg_material = new THREE.MeshBasicMaterial( { color: 0x555555, transparent: true, blending: THREE.AdditiveBlending } );
 	var gridbg_material =  new THREE.MeshPhongMaterial( { map: gridbg_texture, side: THREE.FrontSide, emissive: 0xFFFFFF, bumpMap: gridbg_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, shading: shading, opacity: 0.6, transparent: true  } );
-	// new THREE.MeshPhongMaterial( { map: gridbg_texture, emissive: 0xffff00, bumpMap: gridbg_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
 	var gridbg_cube = new THREE.Mesh( gridbg_geometry, gridbg_material );
 	gridbg_cubes.push(gridbg_cube);
 	gridbg_cube.visible=false;
@@ -107,7 +99,6 @@ for(var i = 0; i <max_block; i++){
 
 	var game_geometry = new THREE.BoxGeometry( 1, 1, .4 );
 	var game_material = new THREE.MeshPhongMaterial( { map: game_texture, emissive: 0xffffff, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
-    // new THREE.MeshPhongMaterial( { map: game_texture, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } ) ;
 	
 	var game_cube = new THREE.Mesh( game_geometry, game_material );
 	game_cubes.push(game_cube);
@@ -119,6 +110,7 @@ for(var i = 0; i <max_block; i++){
 var brainoi = new Brainoi();
 var win = false;
 var n_bin=3, n_col=5, n_row=5;
+
 function blockToWorld(b,x,y,width){
     width = typeof width !== 'undefined' ? width : 1;
     return [(b-1)*(n_col+1)-(n_bin*n_col+2)/2+.5+(x-1)+width/2-.5, (y-1) -n_row/2+0.5];
