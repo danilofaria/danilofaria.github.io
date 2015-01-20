@@ -91,6 +91,7 @@ for(var i = 0; i <max_block; i++){
 	var grid_cube = new THREE.Mesh( grid_geometry, grid_material );
 	grid_cube.type_m = "game";
 	grid_cubes.push(grid_cube);
+	grid_cube.position.x=-10000;
 	grid_cube.visible=false;
 	scene.add( grid_cube );
 
@@ -99,9 +100,9 @@ for(var i = 0; i <max_block; i++){
 	var gridbg_material =  new THREE.MeshPhongMaterial( { map: gridbg_texture, side: THREE.FrontSide, emissive: 0xFFFFFF, bumpMap: gridbg_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, shading: shading, opacity: 0.6, transparent: true  } );
 	// new THREE.MeshPhongMaterial( { map: gridbg_texture, emissive: 0xffff00, bumpMap: gridbg_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
 	var gridbg_cube = new THREE.Mesh( gridbg_geometry, gridbg_material );
-	gridbg_cube.type_m = "game";
 	gridbg_cubes.push(gridbg_cube);
 	gridbg_cube.visible=false;
+	gridbg_cube.position.x=-10000;
 	scene.add( gridbg_cube );
 
 	var game_geometry = new THREE.BoxGeometry( 1, 1, .4 );
@@ -109,9 +110,9 @@ for(var i = 0; i <max_block; i++){
     // new THREE.MeshPhongMaterial( { map: game_texture, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } ) ;
 	
 	var game_cube = new THREE.Mesh( game_geometry, game_material );
-	game_cube.type_m = "game";
 	game_cubes.push(game_cube);
 	game_cube.visible=false;
+	game_cube.position.x=-10000;
 	scene.add( game_cube );
 }
 
@@ -145,13 +146,16 @@ function updateGrid(){
 
 	for(var i=0;i<grid_i;i++){
 		var cube = grid_cubes[i];
+		cube.position.x=-10000;
 		cube.visible=false;
 		var cube = gridbg_cubes[i];
+		cube.position.x=-10000;
 		cube.visible=false;
 	}
 	grid_i=0;
 	for(var i=0;i<game_i;i++){
 		var cube = game_cubes[i];
+		cube.position.x=-10000;
 		cube.visible=false;
 	}
 	game_i=0;
@@ -214,7 +218,7 @@ var render = function () {
 	      if ( HIGHLIGHTED ) HIGHLIGHTED.material.emissive.setHex( HIGHLIGHTED.currentHex );
 	        INTERSECTED = intersects[ 0 ].object;
 	        
-	        if(!brainoi.block_grabbed){
+	        if(brainoi.block_grabbed == null){
 	        	var coord = INTERSECTED.game_coordinates;
 	  	  		var block = brainoi.freeBlockAt(coord[0],coord[1]);
 	  	  		if (block){
