@@ -79,11 +79,7 @@ var gridbg_texture = THREE.ImageUtils.loadTexture( "https://dl.dropboxuserconten
 gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
 gridbg_texture.anisotropy = 16;
 var game_texture = THREE.ImageUtils.loadTexture( 
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/border.png");
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/black.png");
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neongreen.png");
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse.jpg" );
-"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
+	"https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
 game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
 game_texture.anisotropy = 16;
 
@@ -108,7 +104,7 @@ for(var i = 0; i <max_block; i++){
 	gridbg_cube.visible=false;
 	scene.add( gridbg_cube );
 
-	var game_geometry = new THREE.BoxGeometry( 1, 1, .5 );
+	var game_geometry = new THREE.BoxGeometry( 1, 1, .4 );
 	var game_material = new THREE.MeshPhongMaterial( { map: game_texture, emissive: 0xffffff, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } );
     // new THREE.MeshPhongMaterial( { map: game_texture, bumpMap: game_texture, bumpScale: bumpScale, color: 0xFFFFFF, ambient: 0x000000, specular: 0xffffff, shininess: shininess, metal: false, shading: shading } ) ;
 	
@@ -184,7 +180,6 @@ function updateGrid(){
 		game_cube.position.x = world_coord[0];
 		game_cube.position.y = world_coord[1];
 		game_cube.game_coordinates = [block.b(),block.x(),block.y()];
-		game_cube.type_m = "game";
 		block.cube = game_cube;
 	}
 	camera.position.z = (n_bin*n_col+2)/2;
@@ -270,8 +265,6 @@ var render = function () {
 	raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
   	button_clicked=false;
  	mouse_clicked = false;
-
-
 
 	renderer.render(scene, camera);
 };
