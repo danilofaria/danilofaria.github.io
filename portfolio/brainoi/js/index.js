@@ -1,34 +1,42 @@
 THREE.ImageUtils.crossOrigin = '';
 var mouse = new THREE.Vector2(), INTERSECTED, HIGHLIGHTED, cube_clicked;
 var mouse_clicked = false, button_clicked = false;
+
 function onDocumentMouseMove( event ) {
   event.preventDefault();
   mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
+
 function onDocumentMouseClick( event ) {
   // event.preventDefault();
   mouse_clicked = true;
 }
+
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 document.addEventListener( 'click', onDocumentMouseClick, false );
+
 var raycaster= new THREE.Raycaster();
 
-
 var scene = new THREE.Scene();
+
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
 // Create an ambient light
 var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
+
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize( window.innerWidth, window.innerHeight );}
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );}
+
 window.addEventListener( 'resize', onWindowResize, false );
+
 
 //Back ground
 var sphere_material = new THREE.MeshBasicMaterial( { color: 0x000055, wireframe: true } );
@@ -61,7 +69,7 @@ for ( var i = 0; i < 1000; i ++ ) {
 
 var land_geometry = new THREE.BoxGeometry( 1, 1, .2 );
 var land_material = 
-new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00aa00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading } );
+	new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0x00aa00, ambient: 0x000000, shininess: 10, shading: THREE.SmoothShading } );
 var land_cube = new THREE.Mesh( land_geometry, land_material );
 land_cube.visible=false;
 scene.add(land_cube);
@@ -72,15 +80,13 @@ var grid_cubes = [], gridbg_cubes = [], game_cubes = [], grid_i=0, game_i=0;
 
 var shininess = 0, specular = 0x333333, bumpScale = 1, shading = THREE.SmoothShading;
 var gridbg_texture = THREE.ImageUtils.loadTexture( 
-	"http://danilofaria.github.io/portfolio/brainoi/img/neon.png");
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/neon.png" );
-gridbg_texture.wrapS = gridbg_texture.wrapT = THREE.RepeatWrapping;
-gridbg_texture.anisotropy = 16;
+	"textures/neon.png");
+	// "http://danilofaria.github.io/portfolio/brainoi/img/neon.png");
+gridbg_texture.anisotropy = renderer.getMaxAnisotropy();
 var game_texture = THREE.ImageUtils.loadTexture( 
-	"http://danilofaria.github.io/portfolio/brainoi/img/crate.jpg");
-	// "https://dl.dropboxusercontent.com/u/25861113/planet_textures/crate%20difuse%20border.jpg");
-game_texture.wrapS = game_texture.wrapT = THREE.RepeatWrapping;
-game_texture.anisotropy = 16;
+	"textures/crate.jpg");
+	// "http://danilofaria.github.io/portfolio/brainoi/img/crate.jpg");
+game_texture.anisotropy = renderer.getMaxAnisotropy();
 
 for(var i = 0; i <max_block; i++){
 	var grid_geometry = new THREE.BoxGeometry( 1, 1, .51 );
@@ -111,7 +117,7 @@ for(var i = 0; i <max_block; i++){
 }
 
 var brainoi = new Brainoi();
-var win = false;
+var win = false, end = false;
 var n_bin=3, n_col=5, n_row=5;
 
 function blockToWorld(b,x,y,width){
@@ -192,14 +198,14 @@ var render = function () {
 	reference.rotation.x += 0.001;
 	reference.rotation.y += 0.001;
 
-	if (win){
+	if (win && !end){
 		var next = brainoi.next_phase();
 		if(next){
 		alert("Congratulations!");
 		updateGrid();
 		document.getElementById("phase_n").innerHTML = brainoi.phase_n;
 		document.getElementById("moves").innerHTML = 0;}
-		else alert("Congratulations! You've beat all the available phases!");
+		else {alert("Congratulations! You've beat all the available phases!"); end=true;}
 		win=false;
 	}
     land_cube.visible=false;
